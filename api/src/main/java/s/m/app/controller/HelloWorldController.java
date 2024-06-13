@@ -1,4 +1,4 @@
-package s.m.app.hello_world;
+package s.m.app.controller;
 
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;

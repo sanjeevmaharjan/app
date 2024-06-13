@@ -1,6 +1,5 @@
-package s.m.app.security;
+package s.m.app.config;
 
-import com.zaxxer.hikari.util.DriverDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -9,18 +8,17 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.*;
+import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 import javax.sql.DataSource;
-import javax.xml.crypto.Data;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,6 +55,8 @@ public class SecurityConfig {
     JdbcUserDetailsManager jdbcUserDetailsManager(DataSource dataSource) {
         var userDetailsManager = new JdbcUserDetailsManager();
         userDetailsManager.setDataSource(dataSource);
+        userDetailsManager.setEnableAuthorities(true);
+        userDetailsManager.setEnableGroups(true);
 
         return userDetailsManager;
     }
